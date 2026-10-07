@@ -65,9 +65,9 @@ claude plugin update multi-session-effort@multi-session-effort
 
 New sessions pick up the update. In a session that's already open, run `/reload-plugins` (or restart it).
 
-To get updates automatically instead, go to `/plugin` → **Marketplaces** → `multi-session-effort` → **Enable auto-update**. Claude Code then checks for updates at startup.
+To get updates automatically instead, go to `/plugin` → **Marketplaces** → `multi-session-effort` → **Enable auto-update**. Claude Code then checks for updates in the background a few minutes into a session and updates the copy on disk; the new version takes effect in your next session or after `/reload-plugins`.
 
-Releases are marked by the `version` in `.claude-plugin/plugin.json` and `marketplace.json`. Installed copies stay on their cached version until that string changes. Contributors: bump it in both files in every PR that should reach users.
+Releases are marked by the `version` in `.claude-plugin/plugin.json`, which takes precedence over the one in `marketplace.json`. Installed copies stay on their cached version until that string changes. Contributors: bump it in both files in every PR that should reach users, so they never disagree.
 
 ## What's in the box
 
