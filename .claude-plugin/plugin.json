@@ -1,0 +1,12 @@
+{
+  "name": "multi-session-effort",
+  "version": "0.1.0",
+  "description": "Run one effort across several Claude Code sessions: role-based session names with per-effort generation tags, handoffs, a coordinator setup, and five read-only verification subagents.",
+  "author": {
+    "name": "alphonso77"
+  },
+  "homepage": "https://github.com/alphonso77/multi-session-effort",
+  "repository": "https://github.com/alphonso77/multi-session-effort",
+  "license": "MIT",
+  "keywords": ["multi-session", "coordination", "subagents", "handoff"]
+}

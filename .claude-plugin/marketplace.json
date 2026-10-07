@@ -1,0 +1,27 @@
+{
+  "name": "multi-session-effort",
+  "owner": {
+    "name": "alphonso77"
+  },
+  "description": "A single plugin for running one effort across several Claude Code sessions.",
+  "plugins": [
+    {
+      "name": "multi-session-effort",
+      "source": "./",
+      "description": "Run one effort across several Claude Code sessions: role-based session names with per-effort generation tags, handoffs, a coordinator setup, and five read-only verification subagents.",
+      "version": "0.1.0",
+      "author": {
+        "name": "alphonso77"
+      },
+      "homepage": "https://github.com/alphonso77/multi-session-effort",
+      "repository": "https://github.com/alphonso77/multi-session-effort",
+      "license": "MIT",
+      "keywords": [
+        "multi-session",
+        "coordination",
+        "subagents",
+        "handoff"
+      ]
+    }
+  ]
+}
