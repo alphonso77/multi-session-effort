@@ -8,6 +8,23 @@ It gives you:
 - **A start-up and handoff routine.** The coordinator's setup checklist, a first-message template for each peer, the handoff protocol, and how to close an effort.
 - **Subagents by default.** Five agent types (named `multi-session-effort:<agent>` once installed) that keep bulky reading and verification out of each session's context. None of them edits your project: `red-green-checker` works in its own throwaway worktree, and the others write only scratch files under `/tmp`. They are: `records-analyst`, `adversarial-verifier`, `red-green-checker`, `number-tracer`, `render-checker`.
 
+## Operator in the loop, by design
+
+This is not an autonomous pipeline, and that's intentional. The sessions and their subagents do the resourceful work: planning, writing code, reviewing, recomputing numbers, trying to disprove claims. At set points the work stops and waits for you, the operator. Those checkpoints are there so you keep looking closely at what's being built instead of finding out about it afterwards.
+
+The checkpoints built into the rules:
+
+- **You launch every session.** The coordinator proposes each peer, with its launch command and first message, and waits for you to confirm. It never starts sessions or messages peers on its own.
+- **You own the shared resources.** The coordinator asks you which test boxes, flags, deploy workflows and accounts the effort may use, and who grants them.
+- **You agree what success looks like up front.** For anything measured, the headline definition is settled with you before anything runs.
+- **You merge every PR and run every deploy.** Sessions review each other's work and check CI, but they never merge, deploy or log into servers unless you say so. They never sign in or enter credentials for you.
+- **You decide what leaves the team.** Nothing goes outside until it's been reviewed, you choose when it goes, and no session makes commitments or sets dates on your behalf.
+- **You see handoffs happen.** A new session confirms "handoff received" before the old one steps back, and every peer gets the old → new name mapping in one message.
+
+The subagents exist partly to make those checkpoints worth your time. Claims arrive already checked against the source, numbers already recomputed, and fix PRs already tested to fail before the fix and pass after it. You spend your attention judging the work, not redoing it.
+
+If you want more autonomy, loosen these rules in a local playbook (see [Adding your own rules](#adding-your-own-rules)). It's better to do that deliberately than to drift into it.
+
 ## Install
 
 In Claude Code:
