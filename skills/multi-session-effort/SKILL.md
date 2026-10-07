@@ -16,7 +16,7 @@ Name sessions by **role**, not by the task they were started for. A name like `l
 | Role | Name | Owns |
 |---|---|---|
 | Coordinator | `coordinator-gN` | Scheduling, shared resources (test boxes, feature flags, deploy workflows, contract versions), decisions, the roster, and talking to peers. One at a time. |
-| Implementor | `implementor-K-gN` | Writing code and opening PRs, in its own worktree. Add more as the work splits. |
+| Implementor | `implementor-K-gN` | Writing code and opening PRs, in its own worktrees (one per repo it changes). Add more as the work splits. |
 | Reviewer | `reviewer-K-gN` | Reviewing PRs, by session message. Add more as needed. |
 | Out-of-band | `out-of-band-<topic>-gN` | Side work that isn't part of the main effort. Not polled or handed off with it. |
 
@@ -31,16 +31,16 @@ How names behave in Claude Code:
 - Name a session at launch: `claude -n <name>` (long form `--name`). That's better than `/rename` later, because peers never see a temporary name.
 - `claude --resume <name>` opens that session. If several sessions share the name, it opens the picker filtered to it. Because tags reset per effort, `--resume coordinator-g1` may list every past effort's coordinator; pick by date. Messaging between peers is unaffected, because only live sessions are addressed.
 - A peer is addressed by its current name. **Rename only at a handoff**, and send every peer the old → new mapping in one message.
-- The name doesn't say what a session is working on, so each session keeps a role file (in its memory dir) that starts with its role, the effort, and its open items.
+- The name doesn't say what a session is working on, so each session keeps a role file in its memory dir, named `<session-name>-<effort-slug>-role.md` (e.g. `implementor-1-g1-login-role.md`), that starts with its role, the effort, and its open items. The effort slug matters because role names repeat across efforts, and sessions launched from the same directory share one memory dir.
 
 ## 2. Starting an effort
 
 `/multi-session-effort:start-effort <effort>` walks the coordinator through this.
 
 1. **Intake.** Write the ask in one paragraph: who asked, what decision it feeds, the deadline, and who sees the output. Open or choose a tracker issue; requirements and acceptance criteria go in the issue **description**, not only in comments.
-2. **Launch the coordinator** from the directory the work lives in (it picks the memory dir): the repo for repo work, or the home directory for cross-repo work. `claude -n coordinator-g1`.
+2. **Launch the coordinator** from the directory the work lives in (it picks the memory dir): the repo for single-repo work, or a parent directory (such as home) for cross-repo work. `claude -n coordinator-g1`. Sessions launched from the same directory share its memory dir and memory index, so they can read each other's role files; that's expected.
 3. **Coordinator setup:**
-   - Write a role file named for the effort, `coordinator-gN-<effort>-role.md` (e.g. `coordinator-g1-<effort>-role.md`) (role names repeat across efforts, so the effort goes in the file name): role, effort, roster (name, role, owner), the user's decisions with dates, and open items. Add a pointer in the memory index if there is one.
+   - Write the role file `coordinator-gN-<effort-slug>-role.md` (see section 1): role, effort, the repos in scope, roster (name, role, owner, the repos and worktrees each peer works in), the user's decisions with dates, and open items. Add a pointer in the memory index if there is one.
    - List the shared resources the effort needs and who grants them. Only the coordinator schedules them.
    - Write the comms rule up front: nothing goes outside the team until it's reviewed, the user decides when, and no commitments or dates are made on the user's behalf.
    - For anything measured, agree the **headline definition** before running anything: which metric, which population, and whether it's a mean across runs or a single run.
@@ -49,15 +49,15 @@ How names behave in Claude Code:
 ### First message to each peer (template)
 
 > You are <name>, <role> for <effort> (<tracker key>). The coordinator is <coordinator name>. The user merges every PR and runs every deploy.
-> Work in your own worktree, never in <shared checkout>. Shared resources (<list>) belong to the coordinator: ask before touching them.
+> Work in your own worktrees, one per repo you change (<repos and worktree paths>), never in the shared checkouts (<list>). Shared resources (<list>) belong to the coordinator: ask before touching them.
 > Reviews happen by session message, and each round is also posted on the PR as a review with the verdict on its first line. Check final CI before calling anything ready.
 > **Use subagents by default** (multi-session-effort skill, section 4). In each status message, say which checks ran as subagents.
-> Your first task: <task>. Keep a role file that starts with your role, the effort and your open items.
+> Your first task: <task>. Keep a role file, `<name>-<effort-slug>-role.md`, that starts with your role, the effort, your repos and worktrees, and your open items.
 
 ## 3. Handoffs
 
 - Before a handoff, the coordinator asks the other peers whether they need one too, so handoffs happen together.
-- The outgoing session writes a handoff file into a memory dir (copy it out of `/tmp` if it started there): role, effort, roster, decisions, open items, and anything in flight.
+- The outgoing session writes a handoff file into a memory dir, named `handoff-<old-name>-<effort-slug>-<date>.md` (copy it out of `/tmp` if it started there): role, effort, roster, repos and worktrees, decisions, open items, and anything in flight.
 - The new session starts with the next generation tag (`implementor-1-g2`), reads the handoff file, and confirms **"handoff received"** before the old session steps back.
 - The coordinator sends every peer the old → new name mapping in one message.
 
@@ -71,9 +71,9 @@ This plugin ships five agent types. Their full names, for the Agent tool, carry 
 |---|---|
 | `records-analyst` | Reading more than ~3 files, or any raw records, logs, CSVs or git history. Recomputes figures from source. |
 | `adversarial-verifier` | One per blocker, should-fix, or claim, before it's posted or sent. Tries to disprove it. |
-| `red-green-checker` | Every review round of a fix PR: new tests fail on base for the right reason and pass on head. |
+| `red-green-checker` | Every review round of a fix PR: new tests fail on base for the right reason and pass on head. Give it the PR's repo (`owner/name` or a local path) when the session runs outside that repo. |
 | `number-tracer` | Any text others will rely on (readouts, pages, emails, PR bodies that quote figures), before it ships. |
-| `render-checker` | Any static HTML page, before it ships. Needs Playwright in the project. |
+| `render-checker` | Any static HTML page, before it ships. Needs Playwright in the project that holds the pages; give it the page paths. |
 
 Patterns:
 

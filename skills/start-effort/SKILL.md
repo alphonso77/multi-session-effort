@@ -49,7 +49,7 @@ Local playbooks and rules below this block take precedence where more specific.
 
 Do section 2, step 3 of the skill:
 
-- Write the role file `coordinator-gN-<slug>-role.md` (for example `coordinator-g1-<slug>-role.md`) in this session's memory dir: role, effort, roster (just this session for now), the user's decisions with today's date, and open items. Add a pointer in the memory index if there is one.
+- Write the role file `coordinator-gN-<slug>-role.md` (for example `coordinator-g1-<slug>-role.md`) in this session's memory dir: role, effort, the repos in scope (ask the user if it's not clear), roster (just this session for now; each entry gets name, role, owner, repos and worktrees), the user's decisions with today's date, and open items. Add a pointer in the memory index if there is one.
 - Ask the user which shared resources the effort needs and who grants them, and record the comms rule.
 - If anything will be measured, agree the headline definition before anything runs.
 
@@ -58,7 +58,7 @@ Do section 2, step 3 of the skill:
 Propose one implementor and one reviewer unless the work clearly needs something else. For each, give the user:
 
 - the launch command, run from the right directory (`claude -n implementor-1-g1`);
-- its worktree (never this session's checkout);
+- its worktrees, one per repo it will change (never this session's checkout or another peer's);
 - its first message, filled in from the skill's template.
 
 Don't launch sessions yourself or send peer messages until the user confirms.
