@@ -43,7 +43,7 @@ claude plugin install multi-session-effort@multi-session-effort --scope user
 
 ## Use
 
-Start the coordinator from the directory the work lives in, and run the start command:
+Start the coordinator from the directory the work lives in (for work across several repos, a parent directory such as home), and run the start command:
 
 ```
 claude -n coordinator-g1
@@ -53,6 +53,21 @@ claude -n coordinator-g1
 The first time, the command adds a short marked block to your user `~/.claude/CLAUDE.md` so every session knows to follow these rules. After that you can start an effort just by saying so; the command still works.
 
 The coordinator then writes its role file, asks you for the shared resources and comms rules, and gives you the exact `claude -n …` commands for each peer, with each peer's first message.
+
+## Update
+
+Claude Code doesn't auto-update plugins from third-party marketplaces like this one unless you turn it on. To pull the latest release by hand:
+
+```
+claude plugin marketplace update multi-session-effort
+claude plugin update multi-session-effort@multi-session-effort
+```
+
+New sessions pick up the update. In a session that's already open, run `/reload-plugins` (or restart it).
+
+To get updates automatically instead, go to `/plugin` → **Marketplaces** → `multi-session-effort` → **Enable auto-update**. Claude Code then checks for updates in the background a few minutes into a session and updates the copy on disk; the new version takes effect in your next session or after `/reload-plugins`.
+
+Releases are marked by the `version` in `.claude-plugin/plugin.json`, which takes precedence over the one in `marketplace.json`. Installed copies stay on their cached version until that string changes. Contributors: bump it in both files in every PR that should reach users, so they never disagree.
 
 ## What's in the box
 

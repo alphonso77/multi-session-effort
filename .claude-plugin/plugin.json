@@ -1,6 +1,6 @@
 {
   "name": "multi-session-effort",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Run one effort across several Claude Code sessions: role-based session names with per-effort generation tags, handoffs, a coordinator setup, and five read-only verification subagents.",
   "author": {
     "name": "alphonso77"
