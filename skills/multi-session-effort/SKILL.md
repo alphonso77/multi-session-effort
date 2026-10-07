@@ -93,7 +93,7 @@ Limits:
 - Their messages go out under the parent session's name; they aren't peers.
 - The parent session stays accountable: it checks a subagent's key claims against the source before acting on or reporting them.
 
-Peers remain the right tool for work that needs its own worktree, a review loop or a long-lived role. Subagents are for bounded, read-mostly tasks that return a verdict.
+Peers remain the right tool for work that needs its own worktrees, a review loop or a long-lived role. Subagents are for bounded, read-mostly tasks that return a verdict.
 
 ## 5. Running rules
 

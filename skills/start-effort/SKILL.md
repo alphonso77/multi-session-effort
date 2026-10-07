@@ -43,13 +43,13 @@ Local playbooks and rules below this block take precedence where more specific.
 
 1. If `$ARGUMENTS` is empty or too vague to name the effort, ask the user for a one-paragraph intake: who asked, what decision it feeds, the deadline, who sees the output, and the tracker issue if there is one.
 2. This session should be named `coordinator-g1` (or `coordinator-gN` if it took over from an earlier coordinator in the same effort). If you can't tell its name, ask the user. If it isn't named yet, suggest `/rename coordinator-g1` now, before any peer exists.
-3. Pick a short effort slug (the tracker key, lowercased, or two or three words) and confirm it with the user along with the intake.
+3. Pick a short effort slug (`<effort-slug>`) (the tracker key, lowercased, or two or three words) and confirm it with the user along with the intake.
 
 ## Step 4: coordinator setup
 
 Do section 2, step 3 of the skill:
 
-- Write the role file `coordinator-gN-<slug>-role.md` (for example `coordinator-g1-<slug>-role.md`) in this session's memory dir: role, effort, the repos in scope (ask the user if it's not clear), roster (just this session for now; each entry gets name, role, owner, repos and worktrees), the user's decisions with today's date, and open items. Add a pointer in the memory index if there is one.
+- Write the role file `coordinator-gN-<effort-slug>-role.md` (for example `coordinator-g1-<effort-slug>-role.md`) in this session's memory dir: role, effort, the repos in scope (ask the user if it's not clear), roster (just this session for now; each entry gets name, role, owner, repos and worktrees), the user's decisions with today's date, and open items. Add a pointer in the memory index if there is one.
 - Ask the user which shared resources the effort needs and who grants them, and record the comms rule.
 - If anything will be measured, agree the headline definition before anything runs.
 

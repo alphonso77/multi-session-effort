@@ -43,7 +43,7 @@ claude plugin install multi-session-effort@multi-session-effort --scope user
 
 ## Use
 
-Start the coordinator from the directory the work lives in, and run the start command:
+Start the coordinator from the directory the work lives in (for work across several repos, a parent directory such as home), and run the start command:
 
 ```
 claude -n coordinator-g1
